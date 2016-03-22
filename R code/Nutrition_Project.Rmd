@@ -1,0 +1,82 @@
+---
+title: "Nutrition Project"
+author: "Hankui Peng"
+date: "March 7, 2016"
+output: word_document
+---
+
+First, based on the data sets our client Stacey gave us, we put those data into R and get the output analysis data files. Now, I read them into R to conduct some basic comparisons among different groups and among different levels. 
+```{r}
+pday13 <- read.csv("arc13_day_result.csv", header = T, stringsAsFactors = F)
+pday14 <- read.csv("arc14_day_result.csv", header = T, stringsAsFactors = F)
+pday15 <- read.csv("nut15_day_result.csv", header = T, stringsAsFactors = F)
+```
+
+make simple plots.
+```{r, echo=TRUE}
+plot(pday13$HEI2010_TOTAL_SCORE)
+plot(pday14$HEI2010_TOTAL_SCORE)
+plot(pday15$HEI2010_TOTAL_SCORE)
+```
+
+read all the perday results into r.
+```{r}
+pday.all <- read.csv("total_perday.csv", header = T, stringsAsFactors = F)
+attach(pday.all)
+```
+
+
+Conduct a multiple linear regression on perday results. Check what might be significant variables that can influence the final score.
+```{r}
+reg1 <- lm(HEI2010_TOTAL_SCORE~NumFoods+KCAL+factor(year)+RecallNo, data = pday.all)
+summary(reg1)
+```
+Based on the results, it seems that 'Number of foods', 'calories', and 'year2014' are significant in the multiple regression model. It means that 1) with every unit increase in the number of foods, the HEI score is expected to increase by 1.33; 2) with every unit increase in the number of calories taken that day, the HEI score is expected to decrease by 0.007, which is a very tiny change; and 3) the HEI scores of program participants in 2014 is on average 6.7 points higher than participants in 2013, which might due to some other factors in the program that are unkown to us yet. 
+
+
+Now, look at the regression diagnostics. 
+```{r}
+par(mfrow=c(2,2))
+plot(reg1)
+par(mfrow=c(1,1))
+```
+The diagnostic plots basically look good. Given the residuals plot and the QQ plot, the residuals seems pretty random and normally distributed. Only in the residuals vs leverage plot can we see a certain point with high leverage. 
+
+
+---------------------------------------------
+
+level 1: compare output differences through out all 3 years
+
+basic visualizations
+```{r}
+# HEI score, by year
+boxplot(HEI2010_TOTAL_SCORE~year, pday.all)
+
+# HEI score, by person
+boxplot(HEI2010_TOTAL_SCORE~UserName, pday.all)
+```
+
+
+Conduct an ANOVA analysis using the regression results produced above.
+```{r}
+anova(reg1)
+```
+Given the p-value for the ANOVA results, we can see that except for 'RecalNo', there are significant differences in HEI scores in all other variables. 
+
+
+
+
+level 2: regardless of individual difference, see if there is significant improvement in scores between the first daty and last day of the program
+
+level 3: Are there any difference in certain people's eating habaits, that might cause the individual difference among different people
+
+-------------------------------------------------------------
+
+3.18 morning
+1. How we should target our intervention? Which ingredient should we persuade our participants into eating more, in order to most effectively improve their HEI scores?
+
+2. What gave them high & low scores? (same as the first one)
+
+3. Is there something that everybody has in common? eg. for the food category 'legumes', a lot of people get 0s in this column.
+
+

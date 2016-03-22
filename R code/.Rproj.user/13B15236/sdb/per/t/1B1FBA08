@@ -1,0 +1,25 @@
+{
+    "contents" : "",
+    "created" : 1458572320111.000,
+    "dirty" : false,
+    "encoding" : "",
+    "folds" : "",
+    "hash" : "0",
+    "id" : "1B1FBA08",
+    "lastKnownWriteTime" : 7957695015293187189,
+    "path" : null,
+    "project_path" : null,
+    "properties" : {
+        "cacheKey" : "wfmk67w1y9",
+        "caption" : "perday",
+        "contentUrl" : "grid_resource/gridviewer.html?env=&obj=perday&cache_key=wfmk67w1y9",
+        "displayedObservations" : "162",
+        "environment" : "",
+        "object" : "perday",
+        "totalObservations" : "162",
+        "variables" : "19"
+    },
+    "relative_order" : 4,
+    "source_on_save" : false,
+    "type" : "r_dataframe"
+}

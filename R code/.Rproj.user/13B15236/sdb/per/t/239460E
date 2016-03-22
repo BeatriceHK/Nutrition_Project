@@ -1,0 +1,18 @@
+{
+    "contents" : "library(ggplot2)\n\n# by year\nqplot(factor(year), HEI2010_TOTAL_SCORE, data = perday, geom = \"boxplot\")\n\np <- ggplot(perday, aes(factor(year), HEI2010_TOTAL_SCORE))\np+geom_boxplot(aes(fill=factor(year)))\n\n# by person\np <- ggplot(perday, aes(factor(UserName), HEI2010_TOTAL_SCORE))\np+geom_boxplot(aes(fill=factor(UserName)))\n\n# first step: one-way anova\nreg1 <- lm(HEI2010_TOTAL_SCORE~year, data = perday)\nanova(reg1)\n\n# second step: independent two sample t-tests \n\n# 2.1, 2013 and 2014\nt.test(HEI2010_TOTAL_SCORE[year==\"2013\"], HEI2010_TOTAL_SCORE[year==\"2014\"])\n\n# 2.2, 2013 and 2015\nt.test(HEI2010_TOTAL_SCORE[year==\"2013\"], HEI2010_TOTAL_SCORE[year==\"2015\"])\n\n# 2.3, 2014 and 2015\nt.test(HEI2010_TOTAL_SCORE[year==\"2014\"], HEI2010_TOTAL_SCORE[year==\"2015\"])\n\n\n# third step: two-way anova\nreg2 <- lm(HEI2010_TOTAL_SCORE~UserName+year)\nanova(reg2)\n\n\n\n",
+    "created" : 1458590186366.000,
+    "dirty" : false,
+    "encoding" : "ISO8859-1",
+    "folds" : "",
+    "hash" : "3261907105",
+    "id" : "239460E",
+    "lastKnownWriteTime" : 1458595089,
+    "path" : "C:/Users/Peng/Google Drive/Projects/4. Nutrition Project (opened on 2.1.16)/R code/0321rcode.R",
+    "project_path" : "0321rcode.R",
+    "properties" : {
+        "tempName" : "Untitled1"
+    },
+    "relative_order" : 4,
+    "source_on_save" : false,
+    "type" : "r_source"
+}

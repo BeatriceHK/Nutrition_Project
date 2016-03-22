@@ -1,0 +1,19 @@
+{
+    "contents" : "# read the total chart of perday output into r\nperday <- read.csv(\"total_perday.csv\", header = T, stringsAsFactors = F)\nattach(perday)\n\n# run multiple linear regression on perday results\n# to see what might be significant variables that can influence the final score\nreg1 <- lm(HEI2010_TOTAL_SCORE~NumFoods+KCAL+factor(year)+RecallNo, data = perday)\nsummary(reg1)\n\n# look at the regression diagnostics. \npar(mfrow=c(2,2))\nplot(reg1)\npar(mfrow=c(1,1))\n\n# level 1: compare output differences through out all 3 years\n\n# basic visualizations\n\n# HEI score, by year\nboxplot(HEI2010_TOTAL_SCORE~year, perday)\n\n# HEI score, by person\nboxplot(HEI2010_TOTAL_SCORE~UserName, perday)\n\n\n# Conduct an ANOVA analysis using the regression results produced above.\nanova(reg1)\n \n# level 2: regardless of individual difference, see if there is \n# significant improvement in scores between the first day and last day\n\n# level 3: Are there any difference in certain people's eating habaits, \n# that might cause the individual difference among different people\n\n#--------------------------------------------------------\n# 3.15\n# mixed effect model\nlibrary(lme4)\n\n# create a model that used three fixed effects, controlling for by-person variability.\nmem <- lmer(HEI2010_TOTAL_SCORE~NumFoods+KCAL+factor(year)+(1|UserName), \n            data = perday, REML = FALSE)\nmem\nsummary(mem)\n\n# In order to talk about model significance, we use the likelihood ratio test as \n# a means to get p-values \n\n# the null model\nmem1 <- lmer(HEI2010_TOTAL_SCORE~1+(1|UserName), \n             data = perday, REML=FALSE)\n\n# conduct an anova to perform the likelihood ratio test\nanova(mem1, mem)\n\n# look at the coefficients\ncoef(mem)\n\n\n\n\n",
+    "created" : 1458572139492.000,
+    "dirty" : true,
+    "encoding" : "ISO8859-1",
+    "folds" : "",
+    "hash" : "2469710581",
+    "id" : "FABBF10D",
+    "lastKnownWriteTime" : 1458418766,
+    "path" : "C:/Users/Peng/Google Drive/Projects/4. Nutrition Project (opened on 2.1.16)/R code/Nutrition_Project.R",
+    "project_path" : "Nutrition_Project.R",
+    "properties" : {
+        "notebook_format" : "word_document",
+        "tempName" : "Untitled1"
+    },
+    "relative_order" : 3,
+    "source_on_save" : false,
+    "type" : "r_source"
+}

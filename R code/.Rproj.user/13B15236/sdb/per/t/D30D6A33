@@ -1,0 +1,18 @@
+{
+    "contents" : "# per person\nperperson <- read.csv(\"total_perperson.csv\", header = T, stringsAsFactors = F)\nattach(perperson)\nreg1 <- lm(HEI_score~.-UserName, data=perperson)\nsummary(reg1)\n\n# per day\n\n# multiple regression\nreg2 <- lm(HEI2010_TOTAL_SCORE~Tot_Veg+GreenAndBean+Tot_Fruit+WholeFruit+\n             WholeGrain+Tot_Dairy+Tot_Protein+SeafoodAndPlantProtein+\n             FattyAcid+Sodium+RefinedGrain+Empty_Calories+year)\nsummary(reg2)\n\n# produce a correlation matrix\ncor(perday[,-c(1:4)])\n\n# histgrams of each sub-categories\nhist(perday$Tot_Veg)\nhist(perday$GreenAndBean)\nhist(perday$Tot_Fruit)\nhist(perday$WholeFruit)\nhist(perday$WholeGrain)\nhist(perday$Tot_Dairy)\nhist(perday$Tot_Protein)\nhist(perday$SeafoodAndPlantProtein)\nhist(perday$FattyAcid)\nhist(perday$Sodium)\nhist(perday$RefinedGrain)\nhist(perday$Empty_Calories)\n\n----------------------------------------------------\n## the following code is from this tutorial:\n## http://rpsychologist.com/r-guide-longitudinal-lme-lmer\n  \n# lme4\nlibrary(lme4)\nlme.n <- lmer(HEI2010_TOTAL_SCORE ~ 1 + (1 | UserName), data=perday, \n              REML = T, verbose = F)\nsummary(lme.n)\n\n# nlme\nlibrary(nlme)\nlme(HEI2010_TOTAL_SCORE ~ 1, random = ~ 1 | UserName, data=perday)\n\n# unconditional growth model\n# lme4\nlme.mod1 <- lmer(HEI2010_TOTAL_SCORE ~ RecallNo + (RecallNo | UserName), data=perday)\n\n\n# nlme\nlme(HEI2010_TOTAL_SCORE ~ RecallNo, random = ~ RecallNo | UserName, data=perday)\n\n# best subset selection\nlibrary(leaps)\nreg.full <- regsubsets(HEI2010_TOTAL_SCORE~Tot_Veg+GreenAndBean+Tot_Fruit+WholeFruit+\n                         WholeGrain+Tot_Dairy+Tot_Protein+SeafoodAndPlantProtein+\n                         FattyAcid+Sodium+RefinedGrain+Empty_Calories+year, perday)\nsummary(reg.full)\n\n\n# correlation matrix\n",
+    "created" : 1458572134457.000,
+    "dirty" : false,
+    "encoding" : "ISO8859-1",
+    "folds" : "",
+    "hash" : "137289125",
+    "id" : "D30D6A33",
+    "lastKnownWriteTime" : 1458572385,
+    "path" : "C:/Users/Peng/Google Drive/Projects/4. Nutrition Project (opened on 2.1.16)/R code/0318rcode.R",
+    "project_path" : "0318rcode.R",
+    "properties" : {
+        "tempName" : "Untitled1"
+    },
+    "relative_order" : 2,
+    "source_on_save" : false,
+    "type" : "r_source"
+}
